@@ -1,0 +1,31 @@
+﻿<Window x:Class="Graf_MES.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Graf_MES"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="630" Width="1150">
+    <Grid>
+
+        <DataGrid x:Name="dataGrid1" HorizontalAlignment="Left" Height="523" Margin="10,67,0,0" VerticalAlignment="Top" Width="350"/>
+        <DataGrid x:Name="dataGrid2" HorizontalAlignment="Left" Height="245" Margin="720,345,0,0" VerticalAlignment="Top" Width="300"/>
+        <DataGrid x:Name="dataGrid3" HorizontalAlignment="Left" Height="245" Margin="365,67,0,0" VerticalAlignment="Top" Width="655"/>
+        <DataGrid x:Name="dataGrid4" HorizontalAlignment="Left" Height="245" Margin="365,345,0,0" VerticalAlignment="Top" Width="350"/>
+        <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Top" Width="350"/>
+        <ComboBox x:Name="comboBox2" HorizontalAlignment="Left" Margin="365,317,0,0" VerticalAlignment="Top" Width="350"/>
+        <Label x:Name="label" Content="Должности" HorizontalAlignment="Left" Margin="720,311,0,0" VerticalAlignment="Top" Width="300" FontWeight="Bold" FontSize="14"/>
+        <Label x:Name="label1" Content="Учёт часов" HorizontalAlignment="Left" Margin="365,34,0,0" VerticalAlignment="Top" Width="655" FontWeight="Bold" FontSize="14"/>
+        <Menu x:Name="menu" Height="29" VerticalAlignment="Top">
+            <MenuItem Header="File" Height="29" Width="40">
+                <MenuItem Header="MenuItem" HorizontalAlignment="Left" Height="25" Width="120"/>
+                <MenuItem Header="MenuItem" HorizontalAlignment="Left" Height="25" Width="120"/>
+                <Separator/>
+                <MenuItem Header="Exit" HorizontalAlignment="Left" Height="25" Width="120"/>
+            </MenuItem>
+        </Menu>
+        <Button x:Name="button1" Content="Button" HorizontalAlignment="Left" Margin="1025,67,0,0" VerticalAlignment="Top" Width="109" Height="25"/>
+        <Button x:Name="button2" Content="Button" HorizontalAlignment="Left" Margin="1025,97,0,0" VerticalAlignment="Top" Width="109" Height="25"/>
+        <Button x:Name="button3" Content="Button" HorizontalAlignment="Left" Margin="1025,127,0,0" VerticalAlignment="Top" Width="109" Height="25"/>
+    </Grid>
+</Window>
