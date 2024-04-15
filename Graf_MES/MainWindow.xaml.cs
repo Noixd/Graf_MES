@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Data.OleDb;
 
 namespace Graf_MES
 {
@@ -20,9 +21,25 @@ namespace Graf_MES
     /// </summary>
     public partial class MainWindow : Window
     {
+        private static string DB = "Provider = Microsoft.Jet.OLEDB.4.0; Data Source = Sreamdb.mdb";
+        private OleDbConnection connection = new OleDbConnection(DB);
+
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        public void OpenDB()
+        {
+            OleDbConnection connection = new OleDbConnection(DB);
+
+            connection.Open();
+
+            string query = "SELECT * FROM staf";
+
+            OleDbCommand command = new OleDbCommand(query, connection);
+
+            OleDbDataReader reader = command.ExecuteReader();
         }
     }
 }
