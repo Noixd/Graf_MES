@@ -12,20 +12,37 @@
         <DataGrid x:Name="dataGrid2" HorizontalAlignment="Left" Height="245" Margin="720,345,0,0" VerticalAlignment="Top" Width="300"/>
         <DataGrid x:Name="dataGrid3" HorizontalAlignment="Left" Height="245" Margin="365,67,0,0" VerticalAlignment="Top" Width="655"/>
         <DataGrid x:Name="dataGrid4" HorizontalAlignment="Left" Height="245" Margin="365,345,0,0" VerticalAlignment="Top" Width="350"/>
-        <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Top" Width="350"/>
-        <ComboBox x:Name="comboBox2" HorizontalAlignment="Left" Margin="365,317,0,0" VerticalAlignment="Top" Width="350"/>
+        <ComboBox x:Name="comboBox1" HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Top" Width="350" SelectionChanged="comboBox1_SelectionChanged" Initialized="comboBox1_Initialized">
+            <ComboBoxItem>
+                <TextBlock>Смена 1</TextBlock>
+            </ComboBoxItem>
+            <ComboBoxItem>
+                <TextBlock>Смена 2</TextBlock>
+            </ComboBoxItem>
+            <ComboBoxItem>
+                <TextBlock>Смена 3</TextBlock>
+            </ComboBoxItem>
+        </ComboBox>
+        <ComboBox x:Name="comboBox2" HorizontalAlignment="Left" Margin="365,317,0,0" VerticalAlignment="Top" Width="350" Initialized="comboBox2_Initialized" SelectionChanged="comboBox2_SelectionChanged">
+            <ComboBoxItem>
+                <TextBlock>Личный состав</TextBlock>
+            </ComboBoxItem>
+            <ComboBoxItem>
+                <TextBlock>Руководящий состав</TextBlock>
+            </ComboBoxItem>
+        </ComboBox>
         <Label x:Name="label" Content="Должности" HorizontalAlignment="Left" Margin="720,311,0,0" VerticalAlignment="Top" Width="300" FontWeight="Bold" FontSize="14"/>
         <Label x:Name="label1" Content="Учёт часов" HorizontalAlignment="Left" Margin="365,34,0,0" VerticalAlignment="Top" Width="655" FontWeight="Bold" FontSize="14"/>
         <Menu x:Name="menu" Height="29" VerticalAlignment="Top">
             <MenuItem Header="File" Height="29" Width="40">
-                <MenuItem Header="MenuItem" HorizontalAlignment="Left" Height="25" Width="120"/>
-                <MenuItem Header="MenuItem" HorizontalAlignment="Left" Height="25" Width="120"/>
+                <MenuItem Header="Refresh" HorizontalAlignment="Left" Height="25" Width="120" Click="MenuItemRefresh_Click"/>
+                <MenuItem Header="Export to Exel" HorizontalAlignment="Left" Height="25" Width="120" Click="MenuItemExport_Click"/>
                 <Separator/>
-                <MenuItem Header="Exit" HorizontalAlignment="Left" Height="25" Width="120"/>
+                <MenuItem Header="Exit" HorizontalAlignment="Left" Height="25" Width="120" Click="MenuItemExit_Click"/>
             </MenuItem>
         </Menu>
-        <Button x:Name="button1" Content="Button" HorizontalAlignment="Left" Margin="1025,67,0,0" VerticalAlignment="Top" Width="109" Height="25"/>
-        <Button x:Name="button2" Content="Button" HorizontalAlignment="Left" Margin="1025,97,0,0" VerticalAlignment="Top" Width="109" Height="25"/>
-        <Button x:Name="button3" Content="Button" HorizontalAlignment="Left" Margin="1025,127,0,0" VerticalAlignment="Top" Width="109" Height="25"/>
+        <Button x:Name="Add_button" Content="Add" HorizontalAlignment="Left" Margin="1025,67,0,0" VerticalAlignment="Top" Width="110" Height="25" Click="button1_Click"/>
+        <Button x:Name="Change_button" Content="Change" HorizontalAlignment="Left" Margin="1025,97,0,0" VerticalAlignment="Top" Width="110" Height="25"/>
+        <Button x:Name="Delete_button" Content="Delete" HorizontalAlignment="Left" Margin="1025,127,0,0" VerticalAlignment="Top" Width="110" Height="25"/>
     </Grid>
 </Window>
