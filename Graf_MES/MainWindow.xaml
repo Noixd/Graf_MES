@@ -12,7 +12,7 @@
             <DataGrid.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Удалить строку" Click="ContextMenu_delete_row_DG1_Click"></MenuItem>
-                    <MenuItem Header="Изменить ячейку"></MenuItem>
+                    <!--<MenuItem Header="Изменить ячейку"></MenuItem>-->
                 </ContextMenu>
             </DataGrid.ContextMenu>
         </DataGrid>

@@ -1,22 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using OfficeOpenXml;
+using System;
+using System.Data;
+using System.Data.OleDb;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Data.OleDb;
-using System.Data;
-
-
-
 
 namespace Graf_MES
 {
@@ -27,6 +14,7 @@ namespace Graf_MES
     {
         private static string DB = "Provider = Microsoft.ACE.OLEDB.12.0; Data Source = Graf_DB.accdb";
         //private OleDbConnection connection = new OleDbConnection(DB);
+
 
         public MainWindow()
         {
@@ -250,7 +238,47 @@ namespace Graf_MES
 
         private void MenuItemExport_Click(object sender, RoutedEventArgs e)
         {
-            Close();
+
+            using (OleDbConnection connection = new OleDbConnection(DB))
+            {
+                connection.Open();
+                OleDbCommand command = new OleDbCommand("SELECT * FROM graf_table", connection);
+
+                // Чтение данных из базы данных
+                OleDbDataAdapter adapter = new OleDbDataAdapter(command);
+                DataTable dataTable = new DataTable();
+                adapter.Fill(dataTable);
+
+                // Создание нового приложения Excel и книги
+                ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+                ExcelPackage package = new ExcelPackage();
+                ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Sheet1");
+
+                // Запись данных в Excel
+                for (int i = 0; i < dataTable.Columns.Count; i++)
+                {
+                    worksheet.Cells[1, i + 1].Value = dataTable.Columns[i].ColumnName;
+                }
+
+                for (int i = 0; i < dataTable.Rows.Count; i++)
+                {
+                    for (int j = 0; j < dataTable.Columns.Count; j++)
+                    {
+                        if (j == 2)
+                        {
+                            worksheet.Column(j).Style.Numberformat.Format = "MM/dd/yyyy hh:mm:ss AM/PM";
+                        }
+
+                        worksheet.Cells[i + 2, j + 1].Value = dataTable.Rows[i][j];
+
+                    }
+                }
+
+                // Сохранение файла Excel
+
+                package.SaveAs("Export_graf_table.xlsx");
+                MessageBox.Show("Data exported successfully", "Export");
+            }
         }
 
         private void MenuItemExit_Click(object sender, RoutedEventArgs e)
@@ -314,7 +342,7 @@ namespace Graf_MES
             int id_to_delete;
             TextBlock text_to_delete;
             string querry = null;
-            
+
             MessageBoxResult result = MessageBox.Show("Are you sure you want to delete this data?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (result == MessageBoxResult.Yes)
             {
@@ -359,35 +387,36 @@ namespace Graf_MES
         private void dataGrid4_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
             int edit_row;
-            int edit_column;
+            string edit_column;
             string querry = null;
             //string last_name;
             //int crew_num;
 
             //MessageBox.Show(e.EditAction.ToString());
-            if (e.EditAction.ToString() == "Commit") {
+            if (e.EditAction.ToString() == "Commit")
+            {
 
                 edit_row = int.Parse(((System.Data.DataRowView)e.Row.Item).Row.ItemArray[0].ToString());
                 //last_name = ((System.Data.DataRowView)e.Row.Item).Row.ItemArray[1].ToString();
                 //crew_num = int.Parse(((System.Data.DataRowView)e.Row.Item).Row.ItemArray[4].ToString());
-                edit_column = int.Parse(e.Column.DisplayIndex.ToString());
+                edit_column = e.Column.Header.ToString();
                 var edit_value = ((TextBox)e.EditingElement).Text.ToString();
 
-                
+
 
                 switch (comboBox2.SelectedIndex)
                 {
                     case 0:
-                        querry = "UPDATE staff SET " + dataGrid4.Columns[edit_column].Header.ToString() + " = '" + edit_value + "' WHERE Код = " + edit_row;
+                        querry = "UPDATE staff SET " + edit_column + " = '" + edit_value + "' WHERE Код = " + edit_row;
                         //MessageBox.Show(querry);
                         break;
 
                     case 1:
-                        querry = "UPDATE management_staff SET " + dataGrid4.Columns[edit_column].Header.ToString() + " = '" + edit_value + "' WHERE Код = " + edit_row;
+                        querry = "UPDATE management_staff SET " + edit_column + " = '" + edit_value + "' WHERE Код = " + edit_row;
                         //MessageBox.Show(querry);
                         break;
                 }
-                        
+
                 OleDbConnection connection = new OleDbConnection(DB);
                 OleDbCommand command = new OleDbCommand(querry, connection);
 
@@ -415,7 +444,7 @@ namespace Graf_MES
         private void dataGrid3_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
             int edit_row;
-            int edit_column;
+            string edit_column;
             string querry = null;
 
             //MessageBox.Show(e.EditAction.ToString());
@@ -423,10 +452,10 @@ namespace Graf_MES
             {
 
                 edit_row = int.Parse(((System.Data.DataRowView)e.Row.Item).Row.ItemArray[0].ToString());
-                edit_column = int.Parse(e.Column.DisplayIndex.ToString());
+                edit_column = e.Column.Header.ToString();
                 var edit_value = ((TextBox)e.EditingElement).Text.ToString();
 
-                querry = "UPDATE graf_table SET " + dataGrid3.Columns[edit_column].Header.ToString() + " = '" + edit_value + "' WHERE Код = " + edit_row;
+                querry = "UPDATE graf_table SET " + edit_column + " = '" + edit_value + "' WHERE Код = " + edit_row;
                 //MessageBox.Show(querry);
 
                 OleDbConnection connection = new OleDbConnection(DB);
@@ -456,7 +485,7 @@ namespace Graf_MES
         private void dataGrid1_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
             int edit_row;
-            int edit_column;
+            string edit_column;
             string querry = null;
 
             //MessageBox.Show(e.EditAction.ToString());
@@ -464,7 +493,7 @@ namespace Graf_MES
             {
 
                 edit_row = int.Parse(((System.Data.DataRowView)e.Row.Item).Row.ItemArray[0].ToString());
-                edit_column = int.Parse(e.Column.DisplayIndex.ToString());
+                edit_column = e.Column.Header.ToString();
                 var edit_value = ((TextBox)e.EditingElement).Text.ToString();
 
 
@@ -472,17 +501,17 @@ namespace Graf_MES
                 switch (comboBox1.SelectedIndex)
                 {
                     case 0:
-                        querry = "UPDATE crew_"+ 1 + " SET " + dataGrid1.Columns[edit_column].Header.ToString() + " = '" + edit_value + "' WHERE Код = " + edit_row;
+                        querry = "UPDATE crew_1 SET " + edit_column + " = " + edit_value + " WHERE Код = " + edit_row;
                         MessageBox.Show(querry);
                         break;
 
                     case 1:
-                        querry = "UPDATE crew_" + 2 + " SET " + dataGrid1.Columns[edit_column].Header.ToString() + " = '" + edit_value + "' WHERE Код = " + edit_row;
+                        querry = "UPDATE crew_2 SET " + edit_column + " = '" + edit_value + "' WHERE Код = " + edit_row;
                         MessageBox.Show(querry);
                         break;
 
                     case 2:
-                        querry = "UPDATE crew_" + 3 + " SET " + dataGrid1.Columns[edit_column].Header.ToString() + " = '" + edit_value + "' WHERE Код = " + edit_row;
+                        querry = "UPDATE crew_3 SET " + edit_column + " = '" + edit_value + "' WHERE Код = " + edit_row;
                         MessageBox.Show(querry);
                         break;
                 }
@@ -514,7 +543,7 @@ namespace Graf_MES
         private void dataGrid2_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
             int edit_row;
-            int edit_column;
+            string edit_column;
             string querry = null;
 
             //MessageBox.Show(e.EditAction.ToString());
@@ -522,10 +551,10 @@ namespace Graf_MES
             {
 
                 edit_row = int.Parse(((System.Data.DataRowView)e.Row.Item).Row.ItemArray[0].ToString());
-                edit_column = int.Parse(e.Column.DisplayIndex.ToString());
+                edit_column = e.Column.Header.ToString();
                 var edit_value = ((TextBox)e.EditingElement).Text.ToString();
 
-                querry = "UPDATE work_positions SET " + dataGrid2.Columns[edit_column].Header.ToString() + " = '" + edit_value + "' WHERE Код = " + edit_row;
+                querry = "UPDATE work_positions SET " + edit_column + " = '" + edit_value + "' WHERE Код = " + edit_row;
                 MessageBox.Show(querry);
 
                 OleDbConnection connection = new OleDbConnection(DB);
