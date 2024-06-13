@@ -5,13 +5,39 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Graf_MES"
         mc:Ignorable="d"
-        Title="MainWindow" Height="630" Width="1150">
+        Title="MainWindow" Height="635" Width="1045">
     <Grid>
 
-        <DataGrid x:Name="dataGrid1" HorizontalAlignment="Left" Height="523" Margin="10,67,0,0" VerticalAlignment="Top" Width="350"/>
-        <DataGrid x:Name="dataGrid2" HorizontalAlignment="Left" Height="245" Margin="720,345,0,0" VerticalAlignment="Top" Width="300"/>
-        <DataGrid x:Name="dataGrid3" HorizontalAlignment="Left" Height="245" Margin="365,67,0,0" VerticalAlignment="Top" Width="655"/>
-        <DataGrid x:Name="dataGrid4" HorizontalAlignment="Left" Height="245" Margin="365,345,0,0" VerticalAlignment="Top" Width="350"/>
+        <DataGrid x:Name="dataGrid1" HorizontalAlignment="Left" Height="523" Margin="10,67,0,0" VerticalAlignment="Top" Width="350" SelectionMode="Single" SelectionUnit="FullRow">
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Удалить строку" Click="ContextMenu_delete_row_DG1_Click"></MenuItem>
+                    <MenuItem Header="Изменить ячейку"></MenuItem>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
+        </DataGrid>
+        <DataGrid x:Name="dataGrid2" HorizontalAlignment="Left" Height="245" Margin="720,345,0,0" VerticalAlignment="Top" Width="300" SelectionMode="Single" SelectionUnit="FullRow" CanUserAddRows="False">
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Изменить ячейку"></MenuItem>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
+        </DataGrid>
+        <DataGrid x:Name="dataGrid3" HorizontalAlignment="Left" Height="245" Margin="365,67,0,0" VerticalAlignment="Top" Width="655" CanUserAddRows="False" SelectionMode="Single" SelectionUnit="FullRow">
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Изменить ячейку"></MenuItem>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
+        </DataGrid>
+        <DataGrid x:Name="dataGrid4" HorizontalAlignment="Left" Height="245" Margin="365,345,0,0" VerticalAlignment="Top" Width="350" SelectionMode="Single" SelectionUnit="FullRow" CellEditEnding="dataGrid4_CellEditEnding">
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Удалить строку" Click="ContextMenu_delete_row_DG4_Click"></MenuItem>
+                    <MenuItem Header="Изменить ячейку"></MenuItem>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
+        </DataGrid>
         <ComboBox x:Name="comboBox1" HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Top" Width="350" SelectionChanged="comboBox1_SelectionChanged" Initialized="comboBox1_Initialized">
             <ComboBoxItem>
                 <TextBlock>Смена 1</TextBlock>
@@ -41,8 +67,5 @@
                 <MenuItem Header="Exit" HorizontalAlignment="Left" Height="25" Width="120" Click="MenuItemExit_Click"/>
             </MenuItem>
         </Menu>
-        <Button x:Name="Add_button" Content="Add" HorizontalAlignment="Left" Margin="1025,67,0,0" VerticalAlignment="Top" Width="110" Height="25" Click="button1_Click"/>
-        <Button x:Name="Change_button" Content="Change" HorizontalAlignment="Left" Margin="1025,97,0,0" VerticalAlignment="Top" Width="110" Height="25"/>
-        <Button x:Name="Delete_button" Content="Delete" HorizontalAlignment="Left" Margin="1025,127,0,0" VerticalAlignment="Top" Width="110" Height="25"/>
     </Grid>
 </Window>
