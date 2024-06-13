@@ -248,7 +248,6 @@ namespace Graf_MES
 
         }
 
-
         private void MenuItemExport_Click(object sender, RoutedEventArgs e)
         {
             Close();
@@ -257,11 +256,6 @@ namespace Graf_MES
         private void MenuItemExit_Click(object sender, RoutedEventArgs e)
         {
             Close();
-        }
-
-        private void Delete_button_Click(object sender, RoutedEventArgs e)
-        {
-
         }
 
         private void ContextMenu_delete_row_DG1_Click(object sender, RoutedEventArgs e)
@@ -366,21 +360,172 @@ namespace Graf_MES
         {
             int edit_row;
             int edit_column;
-            TextBlock text_to_edit;
-            int id_to_edit;
-            string querry;
+            string querry = null;
+            //string last_name;
+            //int crew_num;
 
-            MessageBox.Show(e.EditAction.ToString());
+            //MessageBox.Show(e.EditAction.ToString());
             if (e.EditAction.ToString() == "Commit") {
 
-                edit_row = int.Parse(e.Row.AlternationIndex.ToString());
+                edit_row = int.Parse(((System.Data.DataRowView)e.Row.Item).Row.ItemArray[0].ToString());
+                //last_name = ((System.Data.DataRowView)e.Row.Item).Row.ItemArray[1].ToString();
+                //crew_num = int.Parse(((System.Data.DataRowView)e.Row.Item).Row.ItemArray[4].ToString());
                 edit_column = int.Parse(e.Column.DisplayIndex.ToString());
                 var edit_value = ((TextBox)e.EditingElement).Text.ToString();
-                text_to_edit = dataGrid4.Columns[0].GetCellContent(dataGrid4.Items[edit_row]) as TextBlock;
-                id_to_edit = int.Parse(text_to_edit.Text);
+
+                
+
+                switch (comboBox2.SelectedIndex)
+                {
+                    case 0:
+                        querry = "UPDATE staff SET " + dataGrid4.Columns[edit_column].Header.ToString() + " = '" + edit_value + "' WHERE Код = " + edit_row;
+                        //MessageBox.Show(querry);
+                        break;
+
+                    case 1:
+                        querry = "UPDATE management_staff SET " + dataGrid4.Columns[edit_column].Header.ToString() + " = '" + edit_value + "' WHERE Код = " + edit_row;
+                        //MessageBox.Show(querry);
+                        break;
+                }
+                        
+                OleDbConnection connection = new OleDbConnection(DB);
+                OleDbCommand command = new OleDbCommand(querry, connection);
+
+                connection.Open();
+
+                try
+                {
+                    if (command.ExecuteNonQuery() == 1)
+                    {
+                        MessageBox.Show("Data changed", "Editing");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Data has not been changed", "Editing");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                connection.Close();
+            }
+        }
+
+        private void dataGrid3_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        {
+            int edit_row;
+            int edit_column;
+            string querry = null;
+
+            //MessageBox.Show(e.EditAction.ToString());
+            if (e.EditAction.ToString() == "Commit")
+            {
+
+                edit_row = int.Parse(((System.Data.DataRowView)e.Row.Item).Row.ItemArray[0].ToString());
+                edit_column = int.Parse(e.Column.DisplayIndex.ToString());
+                var edit_value = ((TextBox)e.EditingElement).Text.ToString();
+
+                querry = "UPDATE graf_table SET " + dataGrid3.Columns[edit_column].Header.ToString() + " = '" + edit_value + "' WHERE Код = " + edit_row;
+                //MessageBox.Show(querry);
+
+                OleDbConnection connection = new OleDbConnection(DB);
+                OleDbCommand command = new OleDbCommand(querry, connection);
+
+                connection.Open();
+
+                try
+                {
+                    if (command.ExecuteNonQuery() == 1)
+                    {
+                        MessageBox.Show("Data changed", "Editing");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Data has not been changed", "Editing");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                connection.Close();
+            }
+        }
+
+        private void dataGrid1_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        {
+            int edit_row;
+            int edit_column;
+            string querry = null;
+
+            //MessageBox.Show(e.EditAction.ToString());
+            if (e.EditAction.ToString() == "Commit")
+            {
+
+                edit_row = int.Parse(((System.Data.DataRowView)e.Row.Item).Row.ItemArray[0].ToString());
+                edit_column = int.Parse(e.Column.DisplayIndex.ToString());
+                var edit_value = ((TextBox)e.EditingElement).Text.ToString();
 
 
-                querry = "UPDATE 'work_positions' SET " + dataGrid4.Columns[edit_column].Header.ToString() + " = '"+ edit_value + "' WHERE 'Код' = " + id_to_edit + "";
+
+                switch (comboBox1.SelectedIndex)
+                {
+                    case 0:
+                        querry = "UPDATE crew_"+ 1 + " SET " + dataGrid1.Columns[edit_column].Header.ToString() + " = '" + edit_value + "' WHERE Код = " + edit_row;
+                        MessageBox.Show(querry);
+                        break;
+
+                    case 1:
+                        querry = "UPDATE crew_" + 2 + " SET " + dataGrid1.Columns[edit_column].Header.ToString() + " = '" + edit_value + "' WHERE Код = " + edit_row;
+                        MessageBox.Show(querry);
+                        break;
+
+                    case 2:
+                        querry = "UPDATE crew_" + 3 + " SET " + dataGrid1.Columns[edit_column].Header.ToString() + " = '" + edit_value + "' WHERE Код = " + edit_row;
+                        MessageBox.Show(querry);
+                        break;
+                }
+
+                OleDbConnection connection = new OleDbConnection(DB);
+                OleDbCommand command = new OleDbCommand(querry, connection);
+
+                connection.Open();
+
+                try
+                {
+                    if (command.ExecuteNonQuery() == 1)
+                    {
+                        MessageBox.Show("Data changed", "Editing");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Data has not been changed", "Editing");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                connection.Close();
+            }
+        }
+
+        private void dataGrid2_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        {
+            int edit_row;
+            int edit_column;
+            string querry = null;
+
+            //MessageBox.Show(e.EditAction.ToString());
+            if (e.EditAction.ToString() == "Commit")
+            {
+
+                edit_row = int.Parse(((System.Data.DataRowView)e.Row.Item).Row.ItemArray[0].ToString());
+                edit_column = int.Parse(e.Column.DisplayIndex.ToString());
+                var edit_value = ((TextBox)e.EditingElement).Text.ToString();
+
+                querry = "UPDATE work_positions SET " + dataGrid2.Columns[edit_column].Header.ToString() + " = '" + edit_value + "' WHERE Код = " + edit_row;
                 MessageBox.Show(querry);
 
                 OleDbConnection connection = new OleDbConnection(DB);
@@ -392,11 +537,11 @@ namespace Graf_MES
                 {
                     if (command.ExecuteNonQuery() == 1)
                     {
-                        MessageBox.Show("Данные изменены", "Изменение");
+                        MessageBox.Show("Data changed", "Editing");
                     }
                     else
                     {
-                        MessageBox.Show("Данные не изменены", "Изменение");
+                        MessageBox.Show("Data has not been changed", "Editing");
                     }
                 }
                 catch (Exception ex)
