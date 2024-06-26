@@ -7,6 +7,12 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="635" Width="1045">
     <Grid>
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="#FFFFF29D" Offset="0"/>
+                <GradientStop Color="#FF6960FF" Offset="1"/>
+            </LinearGradientBrush>
+        </Grid.Background>
 
         <DataGrid x:Name="dataGrid1" HorizontalAlignment="Left" Height="523" Margin="10,67,0,0" VerticalAlignment="Top" Width="350" SelectionMode="Single" SelectionUnit="FullRow" CellEditEnding="dataGrid1_CellEditEnding">
             <DataGrid.ContextMenu>
@@ -58,12 +64,12 @@
         </ComboBox>
         <Label x:Name="label" Content="Должности" HorizontalAlignment="Left" Margin="720,311,0,0" VerticalAlignment="Top" Width="300" FontWeight="Bold" FontSize="14"/>
         <Label x:Name="label1" Content="Учёт часов" HorizontalAlignment="Left" Margin="365,34,0,0" VerticalAlignment="Top" Width="655" FontWeight="Bold" FontSize="14"/>
-        <Menu x:Name="menu" Height="29" VerticalAlignment="Top">
-            <MenuItem Header="File" Height="29" Width="40">
-                <MenuItem Header="Refresh" HorizontalAlignment="Left" Height="25" Width="120" Click="MenuItemRefresh_Click"/>
-                <MenuItem Header="Export to Exel" HorizontalAlignment="Left" Height="25" Width="120" Click="MenuItemExport_Click"/>
+        <Menu x:Name="menu" Height="29" VerticalAlignment="Top" Background="#FFF6EAA3">
+            <MenuItem Header="Файл" Height="29" Width="40">
+                <MenuItem Header="Обновить" HorizontalAlignment="Left" Height="25" Width="165" Click="MenuItemRefresh_Click"/>
+                <MenuItem Header="Экспорт в Exel" HorizontalAlignment="Left" Height="25" Width="165" Click="MenuItemExport_Click"/>
                 <Separator/>
-                <MenuItem Header="Exit" HorizontalAlignment="Left" Height="25" Width="120" Click="MenuItemExit_Click"/>
+                <MenuItem Header="Выход" HorizontalAlignment="Left" Height="25" Width="165" Click="MenuItemExit_Click"/>
             </MenuItem>
         </Menu>
     </Grid>

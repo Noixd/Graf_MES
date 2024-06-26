@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.OleDb;
 using System.Windows;
 using System.Windows.Controls;
+using System.Diagnostics;
 
 namespace Graf_MES
 {
@@ -233,7 +234,6 @@ namespace Graf_MES
         private void MenuItemRefresh_Click(object sender, RoutedEventArgs e)
         {
             Refresh_func();
-
         }
 
         private void MenuItemExport_Click(object sender, RoutedEventArgs e)
@@ -252,7 +252,7 @@ namespace Graf_MES
                 // Создание нового приложения Excel и книги
                 ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
                 ExcelPackage package = new ExcelPackage();
-                ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Sheet1");
+                ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("graf_table");
 
                 // Запись данных в Excel
                 for (int i = 0; i < dataTable.Columns.Count; i++)
@@ -266,7 +266,7 @@ namespace Graf_MES
                     {
                         if (j == 2)
                         {
-                            worksheet.Column(j).Style.Numberformat.Format = "MM/dd/yyyy hh:mm:ss AM/PM";
+                            worksheet.Column(j).Style.Numberformat.Format = "MM/dd/yyyy";
                         }
 
                         worksheet.Cells[i + 2, j + 1].Value = dataTable.Rows[i][j];
@@ -274,10 +274,178 @@ namespace Graf_MES
                     }
                 }
 
+                command = new OleDbCommand("SELECT * FROM staff", connection);
+
+                // Чтение данных из базы данных
+                adapter = new OleDbDataAdapter(command);
+                dataTable = new DataTable();
+                adapter.Fill(dataTable);
+
+                // Создание нового приложения Excel и книги
+                ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+                //package = new ExcelPackage();
+                worksheet = package.Workbook.Worksheets.Add("staff");
+
+                // Запись данных в Excel
+                for (int i = 0; i < dataTable.Columns.Count; i++)
+                {
+                    worksheet.Cells[1, i + 1].Value = dataTable.Columns[i].ColumnName;
+                }
+
+                for (int i = 0; i < dataTable.Rows.Count; i++)
+                {
+                    for (int j = 0; j < dataTable.Columns.Count; j++)
+                    {
+                        if (j == 4)
+                        {
+                            worksheet.Column(j).Style.Numberformat.Format = "MM/dd/yyyy";
+                        }
+
+                        worksheet.Cells[i + 2, j + 1].Value = dataTable.Rows[i][j];
+
+                    }
+                }
+
+                command = new OleDbCommand("SELECT * FROM management_staff", connection);
+
+                // Чтение данных из базы данных
+                adapter = new OleDbDataAdapter(command);
+                dataTable = new DataTable();
+                adapter.Fill(dataTable);
+
+                // Создание нового приложения Excel и книги
+                ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+                //package = new ExcelPackage();
+                worksheet = package.Workbook.Worksheets.Add("management_staff");
+
+                // Запись данных в Excel
+                for (int i = 0; i < dataTable.Columns.Count; i++)
+                {
+                    worksheet.Cells[1, i + 1].Value = dataTable.Columns[i].ColumnName;
+                }
+
+                for (int i = 0; i < dataTable.Rows.Count; i++)
+                {
+                    for (int j = 0; j < dataTable.Columns.Count; j++)
+                    {
+                        if (j == 3)
+                        {
+                            worksheet.Column(j).Style.Numberformat.Format = "MM/dd/yyyy";
+                        }
+
+                        worksheet.Cells[i + 2, j + 1].Value = dataTable.Rows[i][j];
+
+                    }
+                }
+
+                command = new OleDbCommand("SELECT * FROM crew_1", connection);
+
+                // Чтение данных из базы данных
+                adapter = new OleDbDataAdapter(command);
+                dataTable = new DataTable();
+                adapter.Fill(dataTable);
+
+                // Создание нового приложения Excel и книги
+                ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+                //package = new ExcelPackage();
+                worksheet = package.Workbook.Worksheets.Add("crew_1");
+
+                // Запись данных в Excel
+                for (int i = 0; i < dataTable.Columns.Count; i++)
+                {
+                    worksheet.Cells[1, i + 1].Value = dataTable.Columns[i].ColumnName;
+                }
+
+                for (int i = 0; i < dataTable.Rows.Count; i++)
+                {
+                    for (int j = 0; j < dataTable.Columns.Count; j++)
+                    {
+                       worksheet.Cells[i + 2, j + 1].Value = dataTable.Rows[i][j];
+                    }
+                }
+
+                command = new OleDbCommand("SELECT * FROM crew_2", connection);
+
+                // Чтение данных из базы данных
+                adapter = new OleDbDataAdapter(command);
+                dataTable = new DataTable();
+                adapter.Fill(dataTable);
+
+                // Создание нового приложения Excel и книги
+                ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+                //package = new ExcelPackage();
+                worksheet = package.Workbook.Worksheets.Add("crew_2");
+
+                // Запись данных в Excel
+                for (int i = 0; i < dataTable.Columns.Count; i++)
+                {
+                    worksheet.Cells[1, i + 1].Value = dataTable.Columns[i].ColumnName;
+                }
+
+                for (int i = 0; i < dataTable.Rows.Count; i++)
+                {
+                    for (int j = 0; j < dataTable.Columns.Count; j++)
+                    {
+                        worksheet.Cells[i + 2, j + 1].Value = dataTable.Rows[i][j];
+                    }
+                }
+
+                command = new OleDbCommand("SELECT * FROM crew_3", connection);
+
+                // Чтение данных из базы данных
+                adapter = new OleDbDataAdapter(command);
+                dataTable = new DataTable();
+                adapter.Fill(dataTable);
+
+                // Создание нового приложения Excel и книги
+                ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+                //package = new ExcelPackage();
+                worksheet = package.Workbook.Worksheets.Add("crew_3");
+
+                // Запись данных в Excel
+                for (int i = 0; i < dataTable.Columns.Count; i++)
+                {
+                    worksheet.Cells[1, i + 1].Value = dataTable.Columns[i].ColumnName;
+                }
+
+                for (int i = 0; i < dataTable.Rows.Count; i++)
+                {
+                    for (int j = 0; j < dataTable.Columns.Count; j++)
+                    {
+                        worksheet.Cells[i + 2, j + 1].Value = dataTable.Rows[i][j];
+                    }
+                }
                 // Сохранение файла Excel
+
+                command = new OleDbCommand("SELECT * FROM work_positions", connection);
+
+                // Чтение данных из базы данных
+                adapter = new OleDbDataAdapter(command);
+                dataTable = new DataTable();
+                adapter.Fill(dataTable);
+
+                // Создание нового приложения Excel и книги
+                ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+                //package = new ExcelPackage();
+                worksheet = package.Workbook.Worksheets.Add("work_positions");
+
+                // Запись данных в Excel
+                for (int i = 0; i < dataTable.Columns.Count; i++)
+                {
+                    worksheet.Cells[1, i + 1].Value = dataTable.Columns[i].ColumnName;
+                }
+
+                for (int i = 0; i < dataTable.Rows.Count; i++)
+                {
+                    for (int j = 0; j < dataTable.Columns.Count; j++)
+                    {
+                        worksheet.Cells[i + 2, j + 1].Value = dataTable.Rows[i][j];
+                    }
+                }
 
                 package.SaveAs("Export_graf_table.xlsx");
                 MessageBox.Show("Data exported successfully", "Export");
+                Process.Start("Export_graf_table.xlsx");
             }
         }
 
@@ -392,54 +560,80 @@ namespace Graf_MES
             //string last_name;
             //int crew_num;
 
-            //MessageBox.Show(e.EditAction.ToString());
-            if (e.EditAction.ToString() == "Commit")
+            // Проверка, что пользователь завершил редактирование ячейки
+            if (e.EditAction == DataGridEditAction.Commit)
             {
 
-                edit_row = int.Parse(((System.Data.DataRowView)e.Row.Item).Row.ItemArray[0].ToString());
-                //last_name = ((System.Data.DataRowView)e.Row.Item).Row.ItemArray[1].ToString();
-                //crew_num = int.Parse(((System.Data.DataRowView)e.Row.Item).Row.ItemArray[4].ToString());
-                edit_column = e.Column.Header.ToString();
-                var edit_value = ((TextBox)e.EditingElement).Text.ToString();
-
-
-
-                switch (comboBox2.SelectedIndex)
+                //MessageBox.Show(e.EditAction.ToString());
+                if (e.EditAction.ToString() == "Commit")
                 {
-                    case 0:
-                        querry = "UPDATE staff SET " + edit_column + " = '" + edit_value + "' WHERE Код = " + edit_row;
-                        //MessageBox.Show(querry);
-                        break;
 
-                    case 1:
-                        querry = "UPDATE management_staff SET " + edit_column + " = '" + edit_value + "' WHERE Код = " + edit_row;
-                        //MessageBox.Show(querry);
-                        break;
-                }
+                    //last_name = ((System.Data.DataRowView)e.Row.Item).Row.ItemArray[1].ToString();
+                    //crew_num = int.Parse(((System.Data.DataRowView)e.Row.Item).Row.ItemArray[4].ToString());
+                    edit_column = e.Column.Header.ToString();
+                    var edit_value = ((TextBox)e.EditingElement).Text.ToString();
+                    //DataGrid dataGrid = (DataGrid)sender;
+                    //DataRowView newRowView = (DataRowView)dataGrid4.Items[dataGrid.Items.Count - 1];
+                    //DataRow newRow = newRowView.Row;
+                    // Проверяем, что редактируется последняя строка и это было новая строка
+                    //if (e.Row.GetIndex() == dataGrid4.Items.Count - 1 && newRow.RowState == DataRowState.Added)
+                    //{
+                    //    switch (comboBox2.SelectedIndex)
+                    //    {
+                    //        case 0:
+                    //            querry = "INSERT INTO staff  (" + edit_column + ") VALUES (" + edit_value + ")";
+                    //            //MessageBox.Show(querry);
+                    //            break;
 
-                OleDbConnection connection = new OleDbConnection(DB);
-                OleDbCommand command = new OleDbCommand(querry, connection);
-
-                connection.Open();
-
-                try
-                {
-                    if (command.ExecuteNonQuery() == 1)
+                    //        case 1:
+                    //            querry = "INSERT INTO staff  (" + edit_column + ") VALUES (" + edit_value + ")";
+                    //            //MessageBox.Show(querry);
+                    //            break;
+                    //    }
+                    //}
+                    //else
                     {
-                        MessageBox.Show("Data changed", "Editing");
-                    }
-                    else
-                    {
-                        MessageBox.Show("Data has not been changed", "Editing");
+                        edit_row = int.Parse(((System.Data.DataRowView)e.Row.Item).Row.ItemArray[0].ToString());
+                        switch (comboBox2.SelectedIndex)
+                        {
+                            case 0:
+                                querry = "UPDATE staff SET " + edit_column + " = '" + edit_value + "' WHERE Код = " + edit_row;
+                                //MessageBox.Show(querry);
+                                break;
+
+                            case 1:
+                                querry = "UPDATE management_staff SET " + edit_column + " = '" + edit_value + "' WHERE Код = " + edit_row;
+                                //MessageBox.Show(querry);
+                                break;
+                        }
                     }
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-                connection.Close();
             }
+
+
+            OleDbConnection connection = new OleDbConnection(DB);
+            OleDbCommand command = new OleDbCommand(querry, connection);
+
+            connection.Open();
+
+            try
+            {
+                if (command.ExecuteNonQuery() == 1)
+                {
+                    MessageBox.Show("Data changed", "Editing");
+                }
+                else
+                {
+                    MessageBox.Show("Data has not been changed", "Editing");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            connection.Close();
         }
+
 
         private void dataGrid3_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
@@ -582,3 +776,4 @@ namespace Graf_MES
         }
     }
 }
+
