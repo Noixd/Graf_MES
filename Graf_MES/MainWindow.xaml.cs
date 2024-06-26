@@ -478,15 +478,15 @@ namespace Graf_MES
                     {
 
                         case 0:
-                            querry = "DELETE FROM `sta` WHERE `Код` =";
+                            querry = "DELETE FROM `crew_1` WHERE `Код` =";
                             break;
 
                         case 1:
-                            querry = "DELETE FROM `management_staff` WHERE `Код` =";
+                            querry = "DELETE FROM `crew_2` WHERE `Код` =";
                             break;
 
                         case 2:
-                            querry = "DELETE FROM `management_staff` WHERE `Код` =";
+                            querry = "DELETE FROM `crew_3` WHERE `Код` =";
                             break;
                     }
 
