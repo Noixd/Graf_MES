@@ -282,8 +282,6 @@ namespace Graf_MES
                 adapter.Fill(dataTable);
 
                 // Создание нового приложения Excel и книги
-                ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-                //package = new ExcelPackage();
                 worksheet = package.Workbook.Worksheets.Add("staff");
 
                 // Запись данных в Excel
@@ -315,7 +313,6 @@ namespace Graf_MES
 
                 // Создание нового приложения Excel и книги
                 ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-                //package = new ExcelPackage();
                 worksheet = package.Workbook.Worksheets.Add("management_staff");
 
                 // Запись данных в Excel
@@ -347,7 +344,6 @@ namespace Graf_MES
 
                 // Создание нового приложения Excel и книги
                 ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-                //package = new ExcelPackage();
                 worksheet = package.Workbook.Worksheets.Add("crew_1");
 
                 // Запись данных в Excel
@@ -373,7 +369,6 @@ namespace Graf_MES
 
                 // Создание нового приложения Excel и книги
                 ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-                //package = new ExcelPackage();
                 worksheet = package.Workbook.Worksheets.Add("crew_2");
 
                 // Запись данных в Excel
@@ -399,7 +394,6 @@ namespace Graf_MES
 
                 // Создание нового приложения Excel и книги
                 ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-                //package = new ExcelPackage();
                 worksheet = package.Workbook.Worksheets.Add("crew_3");
 
                 // Запись данных в Excel
@@ -426,7 +420,6 @@ namespace Graf_MES
 
                 // Создание нового приложения Excel и книги
                 ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-                //package = new ExcelPackage();
                 worksheet = package.Workbook.Worksheets.Add("work_positions");
 
                 // Запись данных в Excel
@@ -443,9 +436,18 @@ namespace Graf_MES
                     }
                 }
 
+                connection.Close();
+
                 package.SaveAs("Export_graf_table.xlsx");
-                MessageBox.Show("Data exported successfully", "Export");
-                Process.Start("Export_graf_table.xlsx");
+                MessageBox.Show("Данные успешно экспортированы", "Экспорт");
+                try
+                {
+                    Process.Start("Export_graf_table.xlsx");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Ошибка при запуске приложения: " + ex.Message);
+                }
             }
         }
 
@@ -460,7 +462,7 @@ namespace Graf_MES
             TextBlock text_to_delete;
             string querry = null;
 
-            MessageBoxResult result = MessageBox.Show("Are you sure you want to delete this data?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            MessageBoxResult result = MessageBox.Show("Вы уверены, что хотите удалить эти данные?", "Удаление", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (result == MessageBoxResult.Yes)
             {
                 if (dataGrid1.SelectedItem != null)
@@ -492,9 +494,9 @@ namespace Graf_MES
 
                     connection.Open();
 
-                    if (command.ExecuteNonQuery() == 1) MessageBox.Show("Data deleted successfully", "Delete");
+                    if (command.ExecuteNonQuery() == 1) MessageBox.Show("Данные успешно удалены", "Удаление");
 
-                    else MessageBox.Show("Error", "Delete");
+                    else MessageBox.Show("Ошибка", "Удаление");
 
                     connection.Close();
 
@@ -511,7 +513,7 @@ namespace Graf_MES
             TextBlock text_to_delete;
             string querry = null;
 
-            MessageBoxResult result = MessageBox.Show("Are you sure you want to delete this data?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            MessageBoxResult result = MessageBox.Show("Вы уверены, что хотите удалить эти данные?", "Удаление", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (result == MessageBoxResult.Yes)
             {
                 if (dataGrid4.SelectedItem != null)
@@ -539,9 +541,9 @@ namespace Graf_MES
 
                     connection.Open();
 
-                    if (command.ExecuteNonQuery() == 1) MessageBox.Show("Data deleted successfully", "Delete");
+                    if (command.ExecuteNonQuery() == 1) MessageBox.Show("Данные успешно удалены", "Удаление");
 
-                    else MessageBox.Show("Error", "Delete");
+                    else MessageBox.Show("Ошибка", "Удаление");
 
                     connection.Close();
 
@@ -557,59 +559,49 @@ namespace Graf_MES
             int edit_row;
             string edit_column;
             string querry = null;
-            //string last_name;
-            //int crew_num;
 
-            // Проверка, что пользователь завершил редактирование ячейки
-            if (e.EditAction == DataGridEditAction.Commit)
+            // Проверка, что пользователь завершил редактирование ячейки            
+            //MessageBox.Show(e.EditAction.ToString());
+            if (e.EditAction.ToString() == "Commit")
             {
-
-                //MessageBox.Show(e.EditAction.ToString());
-                if (e.EditAction.ToString() == "Commit")
-                {
-
-                    //last_name = ((System.Data.DataRowView)e.Row.Item).Row.ItemArray[1].ToString();
-                    //crew_num = int.Parse(((System.Data.DataRowView)e.Row.Item).Row.ItemArray[4].ToString());
                     edit_column = e.Column.Header.ToString();
                     var edit_value = ((TextBox)e.EditingElement).Text.ToString();
-                    //DataGrid dataGrid = (DataGrid)sender;
-                    //DataRowView newRowView = (DataRowView)dataGrid4.Items[dataGrid.Items.Count - 1];
-                    //DataRow newRow = newRowView.Row;
-                    // Проверяем, что редактируется последняя строка и это было новая строка
-                    //if (e.Row.GetIndex() == dataGrid4.Items.Count - 1 && newRow.RowState == DataRowState.Added)
-                    //{
-                    //    switch (comboBox2.SelectedIndex)
-                    //    {
-                    //        case 0:
-                    //            querry = "INSERT INTO staff  (" + edit_column + ") VALUES (" + edit_value + ")";
-                    //            //MessageBox.Show(querry);
-                    //            break;
 
-                    //        case 1:
-                    //            querry = "INSERT INTO staff  (" + edit_column + ") VALUES (" + edit_value + ")";
-                    //            //MessageBox.Show(querry);
-                    //            break;
-                    //    }
-                    //}
-                    //else
+                if (((System.Data.DataRowView)e.Row.Item).IsNew)
+                {
+                    switch (comboBox2.SelectedIndex)
                     {
-                        edit_row = int.Parse(((System.Data.DataRowView)e.Row.Item).Row.ItemArray[0].ToString());
-                        switch (comboBox2.SelectedIndex)
-                        {
-                            case 0:
-                                querry = "UPDATE staff SET " + edit_column + " = '" + edit_value + "' WHERE Код = " + edit_row;
-                                //MessageBox.Show(querry);
-                                break;
+                        case 0:
+                            querry = "INSERT INTO staff (" + edit_column + ") VALUES ('" + edit_value + "')";
+                            //MessageBox.Show(querry);
+                            break;
 
-                            case 1:
-                                querry = "UPDATE management_staff SET " + edit_column + " = '" + edit_value + "' WHERE Код = " + edit_row;
-                                //MessageBox.Show(querry);
-                                break;
-                        }
+                        case 1:
+                            querry = "INSERT INTO management_staff (" + edit_column + ") VALUES ('" + edit_value + "')";
+                            //MessageBox.Show(querry);
+                            break;
                     }
                 }
-            }
 
+                else
+                {
+                    //MessageBox.Show(dataGrid4.Items.Count.ToString());
+                    edit_row = int.Parse(((System.Data.DataRowView)e.Row.Item).Row.ItemArray[0].ToString());
+                    switch (comboBox2.SelectedIndex)
+                    {
+                        case 0:
+                            querry = "UPDATE staff SET " + edit_column + " = '" + edit_value + "' WHERE Код = " + edit_row;
+                            //MessageBox.Show(querry);
+                            break;
+
+                        case 1:
+                            querry = "UPDATE management_staff SET " + edit_column + " = '" + edit_value + "' WHERE Код = " + edit_row;
+                            //MessageBox.Show(querry);
+                            break;
+                    }
+                }
+                
+            }
 
             OleDbConnection connection = new OleDbConnection(DB);
             OleDbCommand command = new OleDbCommand(querry, connection);
@@ -620,17 +612,18 @@ namespace Graf_MES
             {
                 if (command.ExecuteNonQuery() == 1)
                 {
-                    MessageBox.Show("Data changed", "Editing");
+                    MessageBox.Show("Данные изменены", "Изменение");
                 }
                 else
                 {
-                    MessageBox.Show("Data has not been changed", "Editing");
+                    MessageBox.Show("Данные не изменены", "Изменение");
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
+
             connection.Close();
         }
 
@@ -661,11 +654,11 @@ namespace Graf_MES
                 {
                     if (command.ExecuteNonQuery() == 1)
                     {
-                        MessageBox.Show("Data changed", "Editing");
+                        MessageBox.Show("Данные изменены", "Изменение");
                     }
                     else
                     {
-                        MessageBox.Show("Data has not been changed", "Editing");
+                        MessageBox.Show("Данные не изменены", "Изменение");
                     }
                 }
                 catch (Exception ex)
@@ -682,56 +675,81 @@ namespace Graf_MES
             string edit_column;
             string querry = null;
 
+            // Проверка, что пользователь завершил редактирование ячейки
             //MessageBox.Show(e.EditAction.ToString());
             if (e.EditAction.ToString() == "Commit")
             {
-
-                edit_row = int.Parse(((System.Data.DataRowView)e.Row.Item).Row.ItemArray[0].ToString());
                 edit_column = e.Column.Header.ToString();
                 var edit_value = ((TextBox)e.EditingElement).Text.ToString();
 
-
-
-                switch (comboBox1.SelectedIndex)
+                if (((System.Data.DataRowView)e.Row.Item).IsNew)
                 {
-                    case 0:
-                        querry = "UPDATE crew_1 SET " + edit_column + " = " + edit_value + " WHERE Код = " + edit_row;
-                        MessageBox.Show(querry);
-                        break;
-
-                    case 1:
-                        querry = "UPDATE crew_2 SET " + edit_column + " = '" + edit_value + "' WHERE Код = " + edit_row;
-                        MessageBox.Show(querry);
-                        break;
-
-                    case 2:
-                        querry = "UPDATE crew_3 SET " + edit_column + " = '" + edit_value + "' WHERE Код = " + edit_row;
-                        MessageBox.Show(querry);
-                        break;
-                }
-
-                OleDbConnection connection = new OleDbConnection(DB);
-                OleDbCommand command = new OleDbCommand(querry, connection);
-
-                connection.Open();
-
-                try
-                {
-                    if (command.ExecuteNonQuery() == 1)
+                    switch (comboBox1.SelectedIndex)
                     {
-                        MessageBox.Show("Data changed", "Editing");
-                    }
-                    else
-                    {
-                        MessageBox.Show("Data has not been changed", "Editing");
+                        case 0:
+                            querry = "INSERT INTO crew_1 (" + edit_column + ") VALUES ('" + edit_value + "')";
+                            //MessageBox.Show(querry);
+                            break;
+
+                        case 1:
+                            querry = "INSERT INTO crew_2 (" + edit_column + ") VALUES ('" + edit_value + "')";
+                            //MessageBox.Show(querry);
+                            break;
+
+                        case 2:
+                            querry = "INSERT INTO crew_3 (" + edit_column + ") VALUES ('" + edit_value + "')";
+                            //MessageBox.Show(querry);
+                            break;
                     }
                 }
-                catch (Exception ex)
+
+                else
                 {
-                    MessageBox.Show(ex.Message);
+                    //MessageBox.Show(dataGrid4.Items.Count.ToString());
+                    edit_row = int.Parse(((System.Data.DataRowView)e.Row.Item).Row.ItemArray[0].ToString());
+                    switch (comboBox1.SelectedIndex)
+                    {
+                        case 0:
+                            querry = "UPDATE crew_1 SET " + edit_column + " = '" + edit_value + "' WHERE Код = " + edit_row;
+                            //MessageBox.Show(querry);
+                            break;
+
+                        case 1:
+                            querry = "UPDATE crew_2 SET " + edit_column + " = '" + edit_value + "' WHERE Код = " + edit_row;
+                            //MessageBox.Show(querry);
+                            break;
+
+                        case 2:
+                            querry = "UPDATE crew_2 SET " + edit_column + " = '" + edit_value + "' WHERE Код = " + edit_row;
+                            //MessageBox.Show(querry);
+                            break;
+                    }
                 }
-                connection.Close();
+
             }
+
+            OleDbConnection connection = new OleDbConnection(DB);
+            OleDbCommand command = new OleDbCommand(querry, connection);
+
+            connection.Open();
+
+            try
+            {
+                if (command.ExecuteNonQuery() == 1)
+                {
+                    MessageBox.Show("Данные изменены", "Изменение");
+                }
+                else
+                {
+                    MessageBox.Show("Данные не изменены", "Изменение");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            connection.Close();
         }
 
         private void dataGrid2_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
@@ -749,7 +767,7 @@ namespace Graf_MES
                 var edit_value = ((TextBox)e.EditingElement).Text.ToString();
 
                 querry = "UPDATE work_positions SET " + edit_column + " = '" + edit_value + "' WHERE Код = " + edit_row;
-                MessageBox.Show(querry);
+                //MessageBox.Show(querry);
 
                 OleDbConnection connection = new OleDbConnection(DB);
                 OleDbCommand command = new OleDbCommand(querry, connection);
@@ -760,11 +778,11 @@ namespace Graf_MES
                 {
                     if (command.ExecuteNonQuery() == 1)
                     {
-                        MessageBox.Show("Data changed", "Editing");
+                        MessageBox.Show("Данные изменены", "Изменение");
                     }
                     else
                     {
-                        MessageBox.Show("Data has not been changed", "Editing");
+                        MessageBox.Show("Данные не изменены", "Изменение");
                     }
                 }
                 catch (Exception ex)
